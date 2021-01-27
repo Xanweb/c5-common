@@ -1,0 +1,23 @@
+{
+    "name": "xanweb/c5-common",
+    "description": "Concrete5 Common",
+    "keywords": ["concrete5", "concrete5-v8", "library"],
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Xanweb\\Common\\": ""
+        }
+    },
+    "extra" : {
+        "branch-alias": {
+            "dev-develop": "1.x-dev"
+        }
+    },
+    "support": {
+        "source": "https://github.com/xanweb/c5-common"
+    }
+}
