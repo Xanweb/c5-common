@@ -22,10 +22,6 @@ trait ApplicationTrait
             $this->app = Application::getFacadeApplication();
         }
 
-        if ($make !== null) {
-            return $this->app->make($make);
-        }
-
-        return $this->app;
+        return ($make !== null) ? $this->app->make($make) : $this->app;
     }
 }
