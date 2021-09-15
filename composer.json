@@ -1,11 +1,11 @@
 {
     "name": "xanweb/c5-common",
-    "description": "Concrete5 Common",
-    "keywords": ["concrete5", "concrete5-v8", "library"],
+    "description": "ConcreteCMS Common",
+    "keywords": ["ConcreteCMS", "concrete5", "concrete5-v8", "concreteCMS-v9", "library"],
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "^7.2"
+        "php": ">=7.4"
     },
     "autoload": {
         "psr-4": {
