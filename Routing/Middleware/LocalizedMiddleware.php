@@ -59,8 +59,9 @@ class LocalizedMiddleware implements MiddlewareInterface
             }
 
             $activeLocale = null;
-            if (strcasecmp(Localization::BASE_LOCALE, implode('_', $_locale)) === 0) {
-                $activeLocale = Localization::BASE_LOCALE;
+            $uiLocale = $this->localization->getContextLocale(Localization::CONTEXT_UI);
+            if (strcasecmp($uiLocale, implode('_', $_locale)) === 0) {
+                $activeLocale = $uiLocale;
             } else {
                 $site = $this->siteService->getSite();
                 foreach ($site->getLocales() as $locale) {
@@ -76,6 +77,7 @@ class LocalizedMiddleware implements MiddlewareInterface
             }
 
             $this->localization->setContextLocale(Localization::CONTEXT_SITE, $activeLocale);
+            $this->localization->setActiveContext(Localization::CONTEXT_SITE);
         }
 
         return $frame->next($request);
