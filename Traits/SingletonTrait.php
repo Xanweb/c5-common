@@ -4,7 +4,7 @@ namespace Xanweb\Common\Traits;
 
 trait SingletonTrait
 {
-    private static $instance;
+    private static self $instance;
 
     /**
      * Gets a singleton instance of this class.
@@ -13,6 +13,6 @@ trait SingletonTrait
      */
     public static function get(): self
     {
-        return self::$instance ?? self::$instance = new static();
+        return self::$instance ??= new static();
     }
 }

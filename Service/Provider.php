@@ -6,7 +6,7 @@ use Concrete\Core\Foundation\Service\Provider as CoreServiceProvider;
 
 abstract class Provider extends CoreServiceProvider
 {
-    private static $registered = [];
+    private static array $registered = [];
 
     final public function register(): void
     {

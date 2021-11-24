@@ -16,15 +16,8 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
  */
 class LocalizedMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var SiteService
-     */
-    protected $siteService;
-
-    /**
-     * @var Localization
-     */
-    protected $localization;
+    protected SiteService $siteService;
+    protected Localization $localization;
 
     public function __construct(SiteService $siteService, Localization $localization)
     {
