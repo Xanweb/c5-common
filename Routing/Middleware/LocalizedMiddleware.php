@@ -32,7 +32,7 @@ class LocalizedMiddleware implements MiddlewareInterface
      */
     public function process(Request $request, DelegateInterface $frame)
     {
-        $localeArgMetadata = new ArgumentMetadata('_locale', 'string', false, false, $this->localization->getLocale());
+        $localeArgMetadata = new ArgumentMetadata('_locale', 'string', false, true, $this->localization->getLocale());
         $resolver = new RequestAttributeValueResolver();
         if ($resolver->supports($request, $localeArgMetadata)) {
             $resolved = $resolver->resolve($request, $localeArgMetadata);
@@ -52,20 +52,23 @@ class LocalizedMiddleware implements MiddlewareInterface
             }
 
             $activeLocale = null;
-            $uiLocale = $this->localization->getContextLocale(Localization::CONTEXT_UI);
-            if (strcasecmp($uiLocale, implode('_', $_locale)) === 0) {
-                $activeLocale = $uiLocale;
-            } else {
-                $site = $this->siteService->getSite();
-                foreach ($site->getLocales() as $locale) {
-                    if ($locale->getLanguage() === $_locale[0] && (!isset($_locale[1]) || $locale->getCountry() === Str::upper($_locale[1]))) {
-                        $activeLocale = $locale->getLocale();
-                        break;
-                    }
+            $site = $this->siteService->getSite();
+            foreach ($site->getLocales() as $locale) {
+                if ($locale->getLanguage() === $_locale[0] && (!isset($_locale[1]) || $locale->getCountry() === Str::upper($_locale[1]))) {
+                    $activeLocale = $locale->getLocale();
+                    break;
                 }
             }
 
-            if (!$activeLocale) {
+            if ($activeLocale === null) {
+                $uiLocale = $this->localization->getContextLocale(Localization::CONTEXT_UI);
+                if (strcasecmp($uiLocale, implode('_', $_locale)) === 0
+                    || strcasecmp(Localization::BASE_LOCALE, implode('_', $_locale)) === 0) {
+                    $activeLocale = $site->getDefaultLocale()->getLocale();
+                }
+            }
+
+            if ($activeLocale === null) {
                 $this->throwInvalidLocaleException();
             }
 
